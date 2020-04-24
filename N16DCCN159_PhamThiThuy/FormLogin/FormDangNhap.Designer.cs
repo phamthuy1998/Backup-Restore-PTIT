@@ -1,6 +1,6 @@
 ﻿namespace FormLogin
 {
-    partial class FormLogin
+    partial class FormDangNhap
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLogin));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDangNhap));
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -38,8 +38,8 @@
             this.txPassword = new System.Windows.Forms.TextBox();
             this.txUsername = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.cbbCoso = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.textServerName = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -91,6 +91,7 @@
             this.btnThoat.TabIndex = 34;
             this.btnThoat.Text = "Thoát";
             this.btnThoat.UseVisualStyleBackColor = false;
+            this.btnThoat.Click += new System.EventHandler(this.btnThoat_Click);
             // 
             // btnDangNhap
             // 
@@ -104,6 +105,7 @@
             this.btnDangNhap.TabIndex = 33;
             this.btnDangNhap.Text = "Đăng nhập";
             this.btnDangNhap.UseVisualStyleBackColor = false;
+            this.btnDangNhap.Click += new System.EventHandler(this.btnDangNhap_Click);
             // 
             // label3
             // 
@@ -146,17 +148,6 @@
             this.label2.TabIndex = 29;
             this.label2.Text = "Login";
             // 
-            // cbbCoso
-            // 
-            this.cbbCoso.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbbCoso.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbbCoso.FormattingEnabled = true;
-            this.cbbCoso.Location = new System.Drawing.Point(620, 126);
-            this.cbbCoso.Margin = new System.Windows.Forms.Padding(4);
-            this.cbbCoso.Name = "cbbCoso";
-            this.cbbCoso.Size = new System.Drawing.Size(676, 59);
-            this.cbbCoso.TabIndex = 28;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -164,16 +155,26 @@
             this.label1.Location = new System.Drawing.Point(304, 140);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(126, 46);
+            this.label1.Size = new System.Drawing.Size(246, 46);
             this.label1.TabIndex = 27;
-            this.label1.Text = "Cơ sở";
+            this.label1.Text = "Server name";
             // 
-            // Form1
+            // textServerName
+            // 
+            this.textServerName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textServerName.Location = new System.Drawing.Point(620, 133);
+            this.textServerName.Margin = new System.Windows.Forms.Padding(4);
+            this.textServerName.Name = "textServerName";
+            this.textServerName.Size = new System.Drawing.Size(676, 56);
+            this.textServerName.TabIndex = 40;
+            // 
+            // FormLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.ClientSize = new System.Drawing.Size(1548, 1096);
+            this.Controls.Add(this.textServerName);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
@@ -183,10 +184,11 @@
             this.Controls.Add(this.txPassword);
             this.Controls.Add(this.txUsername);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.cbbCoso);
             this.Controls.Add(this.label1);
-            this.Name = "Form1";
+            this.Name = "FormLogin";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmDangNhap_FormClosing);
+            this.Load += new System.EventHandler(this.FormLogin_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -206,8 +208,8 @@
         private System.Windows.Forms.TextBox txPassword;
         private System.Windows.Forms.TextBox txUsername;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox cbbCoso;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textServerName;
     }
 }
 
