@@ -116,36 +116,39 @@ namespace FormLogin
             if (Program.conn != null && Program.conn.State == ConnectionState.Open)
                 Program.conn.Close(); // đóng kết nối
 
-            progress.Visible = true;
-            int i;
-            for (i = this.progress.Minimum; i <= this.progress.Maximum / 4; i++)
-                progress.Value = i;
-
             if (lbTenDatabase.Text.Trim() == "" || tenDevice == "") return;
-
-            // ngắt kết nối các database
-            String strRestore = "ALTER DATABASE " + lbTenDatabase.Text.Trim()
-                + " SET SINGLE_USER WITH ROLLBACK IMMEDIATE ";
-
+            int i = this.progress.Minimum;
             // Phục hồi về thời điểm đã sao lưu
             if (cbThamSoTheoTg.Checked == false)
             {
-                strRestore += " USE tempdb RESTORE DATABASE " + lbTenDatabase.Text.Trim()
+                String strRestore = "ALTER DATABASE " + lbTenDatabase.Text.Trim()
+                    + " SET SINGLE_USER WITH ROLLBACK IMMEDIATE " +
+                    " USE tempdb RESTORE DATABASE " + lbTenDatabase.Text.Trim()
                     + " FROM   " + tenDevice + " WITH FILE =  " + banSaoLuu + ", REPLACE "
                     + "ALTER DATABASE  " + lbTenDatabase.Text.Trim() + " SET MULTI_USER";
 
-                int err = Program.ExecSqlNonQuery(strRestore, Program.connstr, "Lỗi phục hồi cơ sở dữ liệu.");
-                if (err == 0)
+                if (MessageBox.Show("Bạn có chắc chắn muốn phục hồi database " + Program.databaseName + " về file " + banSaoLuu + "?"
+                  , "Cảnh báo", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
+                    // Show  progressbar
                     progress.Visible = true;
-                    for (; i <= this.progress.Maximum; i++)
+                    for (; i <= this.progress.Maximum / 4; i++)
                         progress.Value = i;
-                    progress.Visible = false;
-                    MessageBox.Show("Phục hồi dữ liệu thành công", "Thông báo", MessageBoxButtons.OK);
+
+                    int err = Program.ExecSqlNonQuery(strRestore, Program.connstr, "Lỗi phục hồi cơ sở dữ liệu.");
+                    if (err == 0)
+                    {
+                        progress.Visible = true;
+                        for (; i <= this.progress.Maximum; i++)
+                            progress.Value = i;
+                        progress.Visible = false;
+                        MessageBox.Show("Phục hồi dữ liệu thành công", "Thông báo", MessageBoxButtons.OK);
+                    }
+                    else progress.Visible = false; return;
                 }
                 else progress.Visible = false; return;
             }
-            // Backup đên 1 thời gian nào đ
+            // Backup đên 1 thời gian người dùng nhập
             else
             {
                 // Ngày giờ stop at > thời điểm sao lưu và nhỏ hơn thời điểm hiện tại ít nhất 3p\
@@ -179,28 +182,27 @@ namespace FormLogin
 
                 //if (dateStop.DateTime.Date <= ngaygioBK.Date
                 //    || thoiDiemStopAt.TimeOfDay.Ticks < ngaygioBK.TimeOfDay.Ticks)
-                if (DateTime.Compare(thoiDiemStopAt, ngaygioBK) <=0  )
+                if (DateTime.Compare(thoiDiemStopAt, ngaygioBK) <= 0)
                 {
                     MessageBox.Show("Thời điểm muốn phục hồi phải sau thời điểm bản sao lưu đã chọn", "", MessageBoxButtons.OK);
                     progress.Visible = false;
                     return;
                 }
 
-                if (MessageBox.Show("Bạn có chắc chắn muốn phục hồi database " + Program.databaseName + "về ngày " + ngaygioBK + "?"
+                if (MessageBox.Show("Bạn có chắc chắn muốn phục hồi database " + Program.databaseName + " về ngày " + thoiDiemStopAt + "?"
                     , "Cảnh báo", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
                     try
                     {
                         // Restore về 1 thời điểm người dùng nhập
-                        strRestore += " BACKUP LOG " + Program.databaseName +
-                             " TO DISK = '" + Program.defaultPath + "DEVICE_" + Program.databaseName + ".trn' WITH NORECOVERY " +
-                             " RESTORE DATABASE " + Program.databaseName +
-                             " FROM  DEVICE_" + Program.databaseName + " WITH FILE = 2, NORECOVERY " +
-                             " RESTORE DATABASE " + Program.databaseName +
-                             " FROM DISK = '" + Program.defaultPath + "DEVICE_" + Program.databaseName + ".trn' " +
-                             " WITH STOPAT= '" + thoiDiemStopAt + "' " +
-                             " ALTER DATABASE  " + Program.databaseName + " SET MULTI_USER ";
-
+                     String  strRestore = "ALTER DATABASE " + lbTenDatabase.Text.Trim()+ " SET SINGLE_USER WITH ROLLBACK IMMEDIATE \n"+
+                            " BACKUP LOG " + Program.databaseName + " TO DISK = '" + Program.defaultPath + "DEVICE_" + Program.databaseName + ".trn' WITH INIT, NORECOVERY; \n " +
+                            " USE tempdb \n" +
+                            " RESTORE DATABASE " + Program.databaseName + " FROM  DEVICE_" + Program.databaseName + " WITH FILE =" + banSaoLuu + ", NORECOVERY; \n" +
+                            " RESTORE DATABASE " + Program.databaseName + " FROM DISK = '" + Program.defaultPath + "DEVICE_" + Program.databaseName + ".trn' " +
+                            " WITH STOPAT= '" + thoiDiemStopAt + "' \n" +
+                            " ALTER DATABASE  " + Program.databaseName + " SET MULTI_USER ";
+                        MessageBox.Show(strRestore);
                         int err = Program.ExecSqlNonQuery(strRestore, Program.connstr, "Lỗi phục hồi cơ sở dữ liệu.");
                         if (err == 0)
                         {
@@ -372,17 +374,6 @@ namespace FormLogin
             // If doesn't exist --> allow user choose a path to create device
             else
             {
-                //using (var fbd = new FolderBrowserDialog())
-                //{
-                //    DialogResult result = fbd.ShowDialog();
-
-                //    if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
-                //    {
-                //        string[] files = Directory.GetFiles(fbd.SelectedPath);
-                //        Program.defaultPath = files.ToString()+"\\";
-                //        TaoDevice();
-                //    }
-                //}
                 OpenFileDialog folderBrowser = new OpenFileDialog();
                 // Set validate names and check file exists to false otherwise windows will
                 // not let you select "Folder Selection."

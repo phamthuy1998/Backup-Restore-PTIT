@@ -1766,7 +1766,7 @@ namespace FormLogin.DSTableAdapters {
 SELECT  position, name, backup_start_date , user_name FROM  msdb.dbo.backupset 
    WHERE     database_name =@DBNAME  AND type='D' AND 
      backup_set_id >= 
-     		( SELECT MAX(backup_set_id) FROM 	msdb.dbo.backupset
+     		( SELECT backup_set_id FROM 	msdb.dbo.backupset
           		WHERE media_set_id = 
 				( SELECT  MAX(media_set_id) 
 				     FROM msdb.dbo.backupset  

@@ -29,7 +29,7 @@ namespace FormLogin
         // sao cho khi đổi máy vẫn có thể chạy được
         // Mặc định sẽ mở đường dẫn này, khi tạo device kiểm tra đường dẫn có tồn tại hay không
         // Nếu tồn tại thì lưu trong đường dẫn,  ngược lại mở folder cho người dùng chọn đường dẫn để lưu
-        public static String defaultPath = "D:/Backup_Restore_DB/";
+        public static String defaultPath = "D:\\Backup_Restore_DB\\";
 
 
 
@@ -51,11 +51,7 @@ namespace FormLogin
         public static String mHoten = "";
         public static int mCoSo = 0;
         public static String mTenCoSo = "";
-
-        public static BindingSource bds_dsLop = new BindingSource();
-        public static BindingSource bds_dspm = new BindingSource();  // giữ bdsPM khi đăng nhập
-                                                                     //public static frmMain frmChinh;
-        public static SqlDataReader dtKhoa;
+        
         public static int KetNoiCosoKhac()
         {
             if (Program.conn1 != null && Program.conn1.State == ConnectionState.Open)
@@ -90,7 +86,6 @@ namespace FormLogin
                 Sqlcmd.ExecuteNonQuery();
                 conn.Close();
                 return 0;
-
             }
             catch (SqlException ex)
             {
@@ -106,9 +101,9 @@ namespace FormLogin
                 Program.conn.Close();
             try
             {
-                Program.connstr = "Data Source=" + Program.servername + ";Initial Catalog=" +
-                      Program.database + ";User ID=" +
-                      Program.mlogin + ";password=" + Program.password;
+                Program.connstr = "Data Source=" + Program.servername 
+                    + ";User ID=" +Program.mlogin 
+                    + ";password=" + Program.password;
                 Program.conn.ConnectionString = Program.connstr;
                 Program.conn.Open();
                 return 1;

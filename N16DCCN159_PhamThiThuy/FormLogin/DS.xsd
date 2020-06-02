@@ -38,7 +38,7 @@
 SELECT  position, name, backup_start_date , user_name FROM  msdb.dbo.backupset 
    WHERE     database_name =@DBNAME  AND type='D' AND 
      backup_set_id &gt;= 
-     		( SELECT MAX(backup_set_id) FROM 	msdb.dbo.backupset
+     		( SELECT backup_set_id FROM 	msdb.dbo.backupset
           		WHERE media_set_id = 
 				( SELECT  MAX(media_set_id) 
 				     FROM msdb.dbo.backupset  
@@ -86,7 +86,7 @@ SELECT  position, name, backup_start_date , user_name FROM  msdb.dbo.backupset
   <xs:element name="DS" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="DS" msprop:Generator_UserDSName="DS">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="databases" msprop:Generator_TableClassName="databasesDataTable" msprop:Generator_TableVarName="tabledatabases" msprop:Generator_TablePropName="databases" msprop:Generator_RowDeletingName="databasesRowDeleting" msprop:Generator_RowChangingName="databasesRowChanging" msprop:Generator_RowEvHandlerName="databasesRowChangeEventHandler" msprop:Generator_RowDeletedName="databasesRowDeleted" msprop:Generator_UserTableName="databases" msprop:Generator_RowChangedName="databasesRowChanged" msprop:Generator_RowEvArgName="databasesRowChangeEvent" msprop:Generator_RowClassName="databasesRow">
+        <xs:element name="databases" msprop:Generator_TableClassName="databasesDataTable" msprop:Generator_TableVarName="tabledatabases" msprop:Generator_RowChangedName="databasesRowChanged" msprop:Generator_TablePropName="databases" msprop:Generator_RowDeletingName="databasesRowDeleting" msprop:Generator_RowChangingName="databasesRowChanging" msprop:Generator_RowEvHandlerName="databasesRowChangeEventHandler" msprop:Generator_RowDeletedName="databasesRowDeleted" msprop:Generator_RowClassName="databasesRow" msprop:Generator_UserTableName="databases" msprop:Generator_RowEvArgName="databasesRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="name" msprop:Generator_ColumnVarNameInTable="columnname" msprop:Generator_ColumnPropNameInRow="name" msprop:Generator_ColumnPropNameInTable="nameColumn" msprop:Generator_UserColumnName="name">
@@ -100,7 +100,7 @@ SELECT  position, name, backup_start_date , user_name FROM  msdb.dbo.backupset
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="SP_STT_BACKUP" msprop:Generator_TableClassName="SP_STT_BACKUPDataTable" msprop:Generator_TableVarName="tableSP_STT_BACKUP" msprop:Generator_TablePropName="SP_STT_BACKUP" msprop:Generator_RowDeletingName="SP_STT_BACKUPRowDeleting" msprop:Generator_RowChangingName="SP_STT_BACKUPRowChanging" msprop:Generator_RowEvHandlerName="SP_STT_BACKUPRowChangeEventHandler" msprop:Generator_RowDeletedName="SP_STT_BACKUPRowDeleted" msprop:Generator_UserTableName="SP_STT_BACKUP" msprop:Generator_RowChangedName="SP_STT_BACKUPRowChanged" msprop:Generator_RowEvArgName="SP_STT_BACKUPRowChangeEvent" msprop:Generator_RowClassName="SP_STT_BACKUPRow">
+        <xs:element name="SP_STT_BACKUP" msprop:Generator_TableClassName="SP_STT_BACKUPDataTable" msprop:Generator_TableVarName="tableSP_STT_BACKUP" msprop:Generator_RowChangedName="SP_STT_BACKUPRowChanged" msprop:Generator_TablePropName="SP_STT_BACKUP" msprop:Generator_RowDeletingName="SP_STT_BACKUPRowDeleting" msprop:Generator_RowChangingName="SP_STT_BACKUPRowChanging" msprop:Generator_RowEvHandlerName="SP_STT_BACKUPRowChangeEventHandler" msprop:Generator_RowDeletedName="SP_STT_BACKUPRowDeleted" msprop:Generator_RowClassName="SP_STT_BACKUPRow" msprop:Generator_UserTableName="SP_STT_BACKUP" msprop:Generator_RowEvArgName="SP_STT_BACKUPRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="position" msprop:Generator_ColumnVarNameInTable="columnposition" msprop:Generator_ColumnPropNameInRow="position" msprop:Generator_ColumnPropNameInTable="positionColumn" msprop:Generator_UserColumnName="position" type="xs:int" minOccurs="0" />
@@ -122,7 +122,7 @@ SELECT  position, name, backup_start_date , user_name FROM  msdb.dbo.backupset
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="backup_devices" msprop:Generator_TableClassName="backup_devicesDataTable" msprop:Generator_TableVarName="tablebackup_devices" msprop:Generator_TablePropName="backup_devices" msprop:Generator_RowDeletingName="backup_devicesRowDeleting" msprop:Generator_RowChangingName="backup_devicesRowChanging" msprop:Generator_RowEvHandlerName="backup_devicesRowChangeEventHandler" msprop:Generator_RowDeletedName="backup_devicesRowDeleted" msprop:Generator_UserTableName="backup_devices" msprop:Generator_RowChangedName="backup_devicesRowChanged" msprop:Generator_RowEvArgName="backup_devicesRowChangeEvent" msprop:Generator_RowClassName="backup_devicesRow">
+        <xs:element name="backup_devices" msprop:Generator_TableClassName="backup_devicesDataTable" msprop:Generator_TableVarName="tablebackup_devices" msprop:Generator_RowChangedName="backup_devicesRowChanged" msprop:Generator_TablePropName="backup_devices" msprop:Generator_RowDeletingName="backup_devicesRowDeleting" msprop:Generator_RowChangingName="backup_devicesRowChanging" msprop:Generator_RowEvHandlerName="backup_devicesRowChangeEventHandler" msprop:Generator_RowDeletedName="backup_devicesRowDeleted" msprop:Generator_RowClassName="backup_devicesRow" msprop:Generator_UserTableName="backup_devices" msprop:Generator_RowEvArgName="backup_devicesRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="name" msprop:Generator_ColumnVarNameInTable="columnname" msprop:Generator_ColumnPropNameInRow="name" msprop:Generator_ColumnPropNameInTable="nameColumn" msprop:Generator_UserColumnName="name">
