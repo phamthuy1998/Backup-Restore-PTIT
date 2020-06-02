@@ -3,13 +3,15 @@
 
 Giảng viên hướng dẫn: Lưu Nguyễn Kỳ Thư
 
+Sinh viên thực hiện: Phạm Thủy
+
 Yêu cầu:
 
 - Sao lưu CSDL bất kỳ trên 1 Server , mỗi CSDL có 1 device để lưu các bản sao của CSDL
 
 - Tạo device để sao lưu CSDL
 
-- Xóa 1 bản sao lưu trên device
+- Xóa 1 bản sao lưu trên device (chưa có làm)
 
 - Phục hồi CSDL về 1 thời điểm đã sao lưu, hoặc chưa sao lưu.
 
